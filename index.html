@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ER1PL – Contest Certificates</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1d2129;--muted:#5d6470;--line:#e3e6eb;--accent:#1f5fa8;--accent-bg:#e7f0fb;--gold:#8a5a00;--gold-bg:#fdf1d8}
+@media (prefers-color-scheme:dark){:root{--bg:#121417;--card:#1c1f24;--text:#e8eaed;--muted:#a0a7b1;--line:#2c3038;--accent:#7fb1ee;--accent-bg:#1b2a3d;--gold:#f0c060;--gold-bg:#3a2e14}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+header{max-width:1100px;margin:0 auto;padding:32px 20px 8px}
+h1{margin:0;font-size:28px;font-weight:600}
+.sub{color:var(--muted);margin:4px 0 0}
+.links{margin-top:10px;font-size:14px}
+.links a{color:var(--accent);text-decoration:none;margin-right:16px}
+.links a:hover{text-decoration:underline}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 4px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px;min-width:140px}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:13px;color:var(--muted)}
+main{max-width:1100px;margin:0 auto;padding:8px 20px 40px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 20px}
+.filters button{font:inherit;font-size:14px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.filters button.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .15s}
+.card:hover{border-color:var(--accent)}
+.thumb{position:relative;aspect-ratio:1.414/1;background:var(--accent-bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.thumb .ph{font-size:13px;color:var(--accent);text-align:center;padding:10px}
+.thumb::after{content:"ER1PL";position:absolute;right:8px;bottom:6px;font-size:12px;font-weight:700;letter-spacing:1px;color:#fff;background:rgba(0,0,0,.35);padding:1px 6px;border-radius:4px}
+.badge{position:absolute;left:8px;top:8px;font-size:12px;font-weight:600;background:var(--gold-bg);color:var(--gold);padding:2px 8px;border-radius:6px}
+.info{padding:10px 12px 12px}
+.info h3{margin:0;font-size:15px;font-weight:600}
+.info p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.info .res{color:var(--text);font-weight:500}
+.lb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:10;align-items:center;justify-content:center;padding:20px}
+.lb.open{display:flex}
+.lb-box{background:var(--card);border-radius:12px;width:min(1000px,100%);height:min(90vh,800px);display:flex;flex-direction:column;overflow:hidden}
+.lb-head{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);gap:10px}
+.lb-head b{font-size:15px}
+.lb-head button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:8px;padding:4px 12px;cursor:pointer}
+.lb iframe{flex:1;border:0;width:100%}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>ER1PL – Contest Certificates</h1>
+  <p class="sub">Lilian Putină · Boghiceni, Republic of Moldova · KN46dw · CQ Zone 16</p>
+  <div class="links">
+    <a href="https://www.qrz.com/db/ER1PL" target="_blank" rel="noopener">QRZ.com page</a>
+    <a href="https://lilixp.github.io/pota-moldova/" target="_blank" rel="noopener">POTA Moldova</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="sTotal">0</b><span>certificates</span></div>
+    <div class="stat"><b id="sFirst">0</b><span>1st place in Moldova</span></div>
+    <div class="stat"><b id="sYears">0</b><span>contest years</span></div>
+  </div>
+</header>
+
+<main>
+  <div class="filters" id="filters"></div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <div class="lb-box">
+    <div class="lb-head"><b id="lbTitle"></b><button id="lbClose" type="button">Close</button></div>
+    <iframe id="lbFrame" title="Certificate preview"></iframe>
+  </div>
+</div>
+
+<footer>Certificates are shown for viewing only. 73 de ER1PL</footer>
+
+<script>
+const D = [
+  // 2026
+  {y:2026,t:"ARRL International DX Contest – SSB",c:"Single Op Unlimited, Low Power",r:"1st place Moldova · 17,289 pts",f:1,id:"1hoDUYobhEhwbEUHKhGSu-ZLkyHu8XRmR"},
+  {y:2026,t:"Helvetia Contest",c:"SOAB SSB Low Power",r:"1st place Moldova",f:1,id:"18sZHsMXISWMRZg_W1HzoxwKxOVCxn9HZ"},
+  {y:2026,t:"IARU Region 1 Field Day – SSB",c:"Portable, Single Op, Low Power",r:"1st place ER · 25th world · 2,483 pts",f:1,id:"1bzGfUsgNNHydW0o2n5L6B3UsJPPUK34b"},
+  {y:2026,t:"YOTA Contest – Round 1",c:"Single Operator All Band",r:"1st place ER · 72nd overall",f:1,id:"1uJacGrHfnDk6qIqliXsQIt59jh1kc1WU"},
+  {y:2026,t:"YOTA Contest – Round 2",c:"Single Operator All Band",r:"1st place ER · 182nd overall",f:1,id:"1X8XqQ6TQconl22f1rzC4UBpOAamAaTb5"},
+  {y:2026,t:"South America 10m Contest",c:"Single Op Low, SSB",r:"1st place Moldova",f:1,id:"1KVl0brQSuqIyi8ctjKBEFjrh9T2q_DG7"},
+  {y:2026,t:"IARU Region 1 50 MHz Contest",c:"Single Op 50 MHz",r:"2nd place national · 159th IARU R1",id:"1btgk0ESeyClminUsYx_g64Zgud6FYOK2"},
+  {y:2026,t:"PACC Contest",c:"Single Op All Low, SSB",r:"2nd place Moldova · 26th in category",id:"1Hm8qQwcvQDWdUQTmU1HwZwog0d1MVitk"},
+  {y:2026,t:"CQ WPX Contest – SSB",c:"Single Op Low Power All Bands",r:"3rd place Moldova · 143,379 pts",id:"1Jkt2kT57KjxeJeAoe5N67voSf0WTqPpi"},
+  {y:2026,t:"EU DX Contest",c:"SOAB SSB Low Power",r:"13th in category (DX) · 255,308 pts",id:"1J5YPOtYprnR0U_oiegUHyuZdFm_AYqqj"},
+  {y:2026,t:"Championnat de France Téléphonie (REF)",c:"Single Op Low Power",r:"17th Europe · 43rd world",id:"1WdaJhTjMFrCOO1_hv3BAK0e0VuwEwQme"},
+  {y:2026,t:"A.R.I. International DX Contest",c:"SO SSB Low",r:"49th place DX",id:"1nEgjp6AubJS1ulxmqNDqwbB3uLY5pdPs"},
+  {y:2026,t:"YO DX HF Contest",c:"SOAB SSB",r:"91st place",id:"1jrzSbtjduoqy5AOJ1rP9nfec7W3QSp1u"},
+  // 2025
+  {y:2025,t:"EU DX Contest",c:"SOAB SSB Low Power",r:"1st place ER · 6th world · 427,269 pts",f:1,id:"14yjNDRi6UcJwQVJP1eJbJVo-DZJGub41"},
+  {y:2025,t:"UBA DX Contest – SSB",c:"SOAB Low Power",r:"1st place Moldova · 12th world",f:1,id:"1-mlalzdbgGiDGxX7zOUzCOO4KuZyUEUx"},
+  {y:2025,t:"All Asian DX Contest – Phone",c:"SOAB Low Power",r:"1st place Moldova · 2,745 pts",f:1,id:"1Ojvg5UlnFYTQcYS46Kw41dtLo0LsLz_u"},
+  {y:2025,t:"ARRL International Digital Contest",c:"SO1R Low Power",r:"1st place Moldova · Country record",f:1,id:"1jTbZGAVj-WBOzQ7BDcq26eepKz9j9oqA"},
+  {y:2025,t:"Helvetia Contest",c:"SOAB SSB Low Power",r:"1st place Moldova",f:1,id:"1UWN0fedKpycqBf981i7FRQgBohkkve-O"},
+  {y:2025,t:"HA DX Contest",c:"SOAB SSB Low Power",r:"1st place ER · 46th world",f:1,id:"1s8Q6hQ3sp99_-eGYtJXqLa0y3IhrawbV"},
+  {y:2025,t:"Holyland DX Contest",c:"SOAB SSB Low Power",r:"1st place Moldova",f:1,id:"1q65__Nj9ObFPG3umnqax8GngFmOxDNvE"},
+  {y:2025,t:"Scandinavian Activity Contest (SAC) – SSB",c:"SOAB Low Power",r:"1st place Moldova · 24th Europe",f:1,id:"13YFcx-k3sFYB9l8HElk9J1Xus3Z-1HnL"},
+  {y:2025,t:"PACC Contest",c:"Single Op All Low, SSB",r:"1st place Moldova · 19th in category",f:1,id:"1CnKqtthW5MD_fFm45wxsdSQ-8L4GAnri"},
+  {y:2025,t:"South America 10m Contest",c:"Single Op Low, SSB",r:"1st place Moldova",f:1,id:"1_tE_z25hqfwkYvPzpykaPSoXwFkrf2mC"},
+  {y:2025,t:"YOTA Contest – Round 1",c:"Single Operator All Band",r:"1st place ER · 61st overall",f:1,id:"1IZ5V1EK_3It-tQrboZhVYb6WO3N1XxMG"},
+  {y:2025,t:"YOTA Contest – Round 2",c:"Single Operator All Band",r:"1st place ER · 59th overall",f:1,id:"1b31koHwwDcEUF-74vWr-e5HfQg3nm35E"},
+  {y:2025,t:"IARU Region 1 Field Day – SSB",c:"Fixed station",r:"1st place ER · 66th world",f:1,id:"1Ip3-eQynlRNEe3awdqNzKiT97ske1m3a"},
+  {y:2025,t:"CQ World Wide DX Contest – SSB",c:"Single Op Assisted Low Power All Bands",r:"2nd place Moldova · 257,556 pts",id:"17WGkx8bAkAFCSuGdiAcYa0yBeU--U2Cz"},
+  {y:2025,t:"CQ WPX Contest – SSB",c:"Single Op Low Power All Bands",r:"2nd place Moldova · 280,700 pts",id:"12t2vm_gvSDX8VwwWDB6uVeipgFyihRUX"},
+  {y:2025,t:"IARU HF World Championship",c:"Single Op Unlimited, Phone, Low Power",r:"2nd place Moldova · 6th Zone 29",id:"1hi-8l4IdnIgdfbSWkuQhPE-0luPbJyQu"},
+  {y:2025,t:"ARRL International DX Contest – SSB",c:"Single Op Unlimited, Low Power",r:"2nd place Moldova · 5,208 pts",id:"1l-dB4q2t4OSysx4KM-Q-eIfHVR5iWCgw"},
+  {y:2025,t:"ARRL 10 Meter Contest",c:"Single Op Unlimited, Phone, Low Power",r:"2nd place Moldova · 3,306 pts",id:"1DNB3fVDL1b7cBk2wjqPk3lXwqXH6iZIZ"},
+  {y:2025,t:"UK/EI DX Contest – SSB",c:"Single Op Low Power Assisted",r:"2nd place Moldova · 46th Europe",id:"1m4YLGrLZZA1B0fiz0-I0Y7HmgyZgpqrl"},
+  {y:2025,t:"European HF Championship",c:"SSB Low Power",r:"2nd place Moldova · 93rd Europe",id:"1fMf41wPrA5BUzo7n9n5O12VxkfMcdBa2"},
+  {y:2025,t:"SP DX Contest",c:"SOAB Phone Low Power",r:"2nd place Moldova · 43rd Europe",id:"1rJutYyarMKhWbyAqgegTprWCdAOz9_FU"},
+  {y:2025,t:"IARU Region 1 50 MHz Contest",c:"Single Op 50 MHz",r:"3rd place national · 195th IARU R1",id:"1uaYIHfIlf4N9iTKv6pPFEDDYKMjqicSd"},
+  {y:2025,t:"OK/OM DX Contest – SSB",c:"SOAB Low",r:"11th place EU stations · 80,262 pts",id:"11G-EXuTrUPuOq9jVt5D-XQWvgIudfymT"},
+  {y:2025,t:"Championnat de France Téléphonie (REF)",c:"Single Op Low Power",r:"16th Europe · 52nd world",id:"1NUEpPq0kaqVltD1Gg5O--V8mrg-bXAix"},
+  {y:2025,t:"A.R.I. International DX Contest",c:"SO SSB Low",r:"29th place DX",id:"15lRKIktUkCD5jFhBdhf7EfSc9aQ7Ev1h"},
+  {y:2025,t:"YO DX HF Contest",c:"SOAB SSB",r:"54th place",id:"1x0TArzfJOAmDFOBfaVl3ZYDmVfrGrNHm"},
+  {y:2025,t:"RSGB FT4 International Activity Day",c:"100W Non-UK Single Radio",r:"74th place",id:"1zgEXrcm-PisachwT0LXbNmcdBYN4HTg9"},
+  {y:2025,t:"RSGB IOTA Contest",c:"Single Op, World / SSB / Low",r:"79th in section",id:"1SfeNH8h0bGa-XCR80UKI3HZ_aSgTbLyl"},
+  {y:2025,t:"S.M. El Rey de España Contest – SSB",c:"Participation",r:"Certificate of participation",id:"1Kf-h3a2V9QJPCTUr_PKto8pt6r89848Z"},
+  // 2024
+  {y:2024,t:"CQ World Wide DX Contest – SSB",c:"Single Op Low Power All Bands",r:"2nd place Moldova · 21,266 pts",id:"15zLolkWyJcAZILz_tcVBU3k8faayWMDn"},
+  {y:2024,t:"LZ DX HF Contest",c:"SOAB SSB Low Power",r:"101st place",id:"1a7dz5lkytId2-UcNhyu6_v7TdfzXVmrP"}
+];
+
+const grid = document.getElementById('grid');
+const filtersEl = document.getElementById('filters');
+const years = [...new Set(D.map(d => d.y))].sort((a, b) => b - a);
+const FILTERS = [{k:'all',l:'All'},{k:'first',l:'🥇 1st places'},...years.map(y => ({k:String(y),l:String(y)}))];
+let current = 'all';
+
+document.getElementById('sTotal').textContent = D.length;
+document.getElementById('sFirst').textContent = D.filter(d => d.f).length;
+document.getElementById('sYears').textContent = years.length;
+
+function thumbUrl(id){ return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w600'; }
+
+function render(){
+  const list = D.filter(d => current === 'all' || (current === 'first' ? d.f : String(d.y) === current));
+  grid.innerHTML = '';
+  list.forEach(d => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex = 0;
+    card.innerHTML =
+      '<div class="thumb">' + (d.f ? '<span class="badge">🥇 #1</span>' : '') +
+      '<img loading="lazy" alt="' + d.t + ' ' + d.y + ' certificate" src="' + thumbUrl(d.id) + '"></div>' +
+      '<div class="info"><h3>' + d.t + ' ' + d.y + '</h3><p>' + d.c + '</p><p class="res">' + d.r + '</p></div>';
+    const img = card.querySelector('img');
+    img.addEventListener('error', () => {
+      img.replaceWith(Object.assign(document.createElement('div'), {className:'ph', textContent:'📜 Click to view certificate'}));
+    });
+    img.addEventListener('contextmenu', e => e.preventDefault());
+    card.addEventListener('click', () => openLb(d));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter') openLb(d); });
+    grid.appendChild(card);
+  });
+}
+
+FILTERS.forEach(f => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = f.l;
+  if (f.k === current) b.className = 'on';
+  b.addEventListener('click', () => {
+    current = f.k;
+    [...filtersEl.children].forEach(x => x.className = '');
+    b.className = 'on';
+    render();
+  });
+  filtersEl.appendChild(b);
+});
+
+const lb = document.getElementById('lb');
+const lbFrame = document.getElementById('lbFrame');
+function openLb(d){
+  document.getElementById('lbTitle').textContent = d.t + ' ' + d.y;
+  lbFrame.src = 'https://drive.google.com/file/d/' + d.id + '/preview';
+  lb.classList.add('open');
+}
+function closeLb(){ lb.classList.remove('open'); lbFrame.src = 'about:blank'; }
+document.getElementById('lbClose').addEventListener('click', closeLb);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+render();
+</script>
+</body>
+</html>
