@@ -39,6 +39,7 @@ main{max-width:1100px;margin:0 auto;padding:8px 20px 40px}
 .thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 .thumb .ph{font-size:13px;color:var(--accent);text-align:center;padding:10px}
 .thumb::after{content:"ER1PL";position:absolute;right:8px;bottom:6px;font-size:12px;font-weight:700;letter-spacing:1px;color:#fff;background:rgba(0,0,0,.35);padding:1px 6px;border-radius:4px}
+.badge.dx{background:var(--accent-bg);color:var(--accent)}
 .badge{position:absolute;left:8px;top:8px;font-size:12px;font-weight:600;background:var(--gold-bg);color:var(--gold);padding:2px 8px;border-radius:6px}
 .info{padding:10px 12px 12px}
 .info h3{margin:0;font-size:15px;font-weight:600}
@@ -56,14 +57,15 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 30px}
 </head>
 <body>
 <header>
-  <h1>ER1PL – Contest Certificates</h1>
+  <h1>ER1PL – Contest Certificates &amp; DXCC Awards</h1>
   <p class="sub">Lilian Putină · Boghiceni, Republic of Moldova · KN46dw · CQ Zone 16</p>
   <div class="links">
     <a href="https://www.qrz.com/db/ER1PL" target="_blank" rel="noopener">QRZ.com page</a>
     <a href="https://lilixp.github.io/pota-moldova/" target="_blank" rel="noopener">POTA Moldova</a>
   </div>
   <div class="stats">
-    <div class="stat"><b id="sTotal">0</b><span>certificates</span></div>
+    <div class="stat"><b id="sTotal">0</b><span>contest certificates</span></div>
+    <div class="stat"><b id="sDxcc">0</b><span>DXCC awards</span></div>
     <div class="stat"><b id="sFirst">0</b><span>1st place in Moldova</span></div>
     <div class="stat"><b id="sYears">0</b><span>contest years</span></div>
   </div>
@@ -85,6 +87,11 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 30px}
 
 <script>
 const D = [
+  // DXCC
+  {y:2025,cat:"dxcc",t:"DXCC Mixed",c:"ARRL DX Century Club",r:"Certificate #71,923 · April 2, 2025",id:"1jYrAoPlyKwj4c4RPhLjdSHCe-iA4ivgY"},
+  {y:2025,cat:"dxcc",t:"DXCC Phone",c:"ARRL DX Century Club",r:"Certificate #46,707 · November 6, 2025",id:"120pLxvUlteOdULrNJj-gQ9jYn2GLqz1f"},
+  {y:2025,cat:"dxcc",t:"DXCC Digital",c:"ARRL DX Century Club",r:"Certificate #11,199 · November 6, 2025",id:"1hauNIE4Pu5fwnCDfeaPUhsiyG7a8eUpX"},
+  {y:2025,cat:"dxcc",t:"DXCC 20 Meters",c:"ARRL DX Century Club",r:"November 6, 2025",id:"1GL6D45EJJch6UZtJJgdaMQ5yMIMsvjis"},
   // 2026
   {y:2026,t:"ARRL International DX Contest – SSB",c:"Single Op Unlimited, Low Power",r:"1st place Moldova · 17,289 pts",f:1,id:"1hoDUYobhEhwbEUHKhGSu-ZLkyHu8XRmR"},
   {y:2026,t:"Helvetia Contest",c:"SOAB SSB Low Power",r:"1st place Moldova",f:1,id:"18sZHsMXISWMRZg_W1HzoxwKxOVCxn9HZ"},
@@ -137,27 +144,28 @@ const D = [
 
 const grid = document.getElementById('grid');
 const filtersEl = document.getElementById('filters');
-const years = [...new Set(D.map(d => d.y))].sort((a, b) => b - a);
-const FILTERS = [{k:'all',l:'All'},{k:'first',l:'🥇 1st places'},...years.map(y => ({k:String(y),l:String(y)}))];
+const years = [...new Set(D.filter(d => !d.cat).map(d => d.y))].sort((a, b) => b - a);
+const FILTERS = [{k:'all',l:'All'},{k:'dxcc',l:'🌍 DXCC awards'},{k:'first',l:'🥇 1st places'},...years.map(y => ({k:String(y),l:String(y)}))];
 let current = 'all';
 
-document.getElementById('sTotal').textContent = D.length;
+document.getElementById('sTotal').textContent = D.filter(d => !d.cat).length;
+document.getElementById('sDxcc').textContent = D.filter(d => d.cat === 'dxcc').length;
 document.getElementById('sFirst').textContent = D.filter(d => d.f).length;
 document.getElementById('sYears').textContent = years.length;
 
 function thumbUrl(id){ return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w600'; }
 
 function render(){
-  const list = D.filter(d => current === 'all' || (current === 'first' ? d.f : String(d.y) === current));
+  const list = D.filter(d => current === 'all' || (current === 'dxcc' ? d.cat === 'dxcc' : current === 'first' ? d.f : (String(d.y) === current && !d.cat)));
   grid.innerHTML = '';
   list.forEach(d => {
     const card = document.createElement('div');
     card.className = 'card';
     card.tabIndex = 0;
     card.innerHTML =
-      '<div class="thumb">' + (d.f ? '<span class="badge">🥇 #1</span>' : '') +
+      '<div class="thumb">' + (d.f ? '<span class="badge">🥇 #1</span>' : d.cat === 'dxcc' ? '<span class="badge dx">🌍 DXCC</span>' : '') +
       '<img loading="lazy" alt="' + d.t + ' ' + d.y + ' certificate" src="' + thumbUrl(d.id) + '"></div>' +
-      '<div class="info"><h3>' + d.t + ' ' + d.y + '</h3><p>' + d.c + '</p><p class="res">' + d.r + '</p></div>';
+      '<div class="info"><h3>' + d.t + (d.cat ? '' : ' ' + d.y) + '</h3><p>' + d.c + '</p><p class="res">' + d.r + '</p></div>';
     const img = card.querySelector('img');
     img.addEventListener('error', () => {
       img.replaceWith(Object.assign(document.createElement('div'), {className:'ph', textContent:'📜 Click to view certificate'}));
@@ -186,7 +194,7 @@ FILTERS.forEach(f => {
 const lb = document.getElementById('lb');
 const lbFrame = document.getElementById('lbFrame');
 function openLb(d){
-  document.getElementById('lbTitle').textContent = d.t + ' ' + d.y;
+  document.getElementById('lbTitle').textContent = d.t + (d.cat ? '' : ' ' + d.y);
   lbFrame.src = 'https://drive.google.com/file/d/' + d.id + '/preview';
   lb.classList.add('open');
 }
